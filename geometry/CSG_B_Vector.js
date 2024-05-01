@@ -62,7 +62,7 @@ CSGBuilder.Vector.prototype = {
       return new CSGBuilder.Vector(this.x * a, this.y * a, this.z * a);
     },
   
-    dividedBy: function(a) {
+    divideBy: function(a) {
       return new CSGBuilder.Vector(this.x / a, this.y / a, this.z / a);
     },
   
@@ -73,10 +73,22 @@ CSGBuilder.Vector.prototype = {
 
     // spherical linear interpolation
     slerp: function(a, t) {
+        this.normalize();
+        a.normalize();
 
+        const theta = Math.acos(Math.max(Math.min(this.dot(a), 1), -1));
+
+        const sinVal = Math.sin((1-t) * theta) / Math.sin(theta);
+        const cosVal = Math.sin(t*theta) / Math.sin(theta);
+
+        const x = this.x*sinVal + a.x*cosVal;
+        const y = this.y*sinVal + a.y*cosVal;
+        const z = this.z*sinVal + a.z*cosVal;
+
+        return new CSGBuilder.Vector(x,y,z);
     },   
 
     normalize: function() {
-      return this.dividedBy(this.length());
+      return this.divideBy(this.length());
     }
 };
