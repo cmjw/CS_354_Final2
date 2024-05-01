@@ -34,14 +34,19 @@
                 
                 <div class="column">
                     <td><div id="0" class="viewer"></div><code>a</code></td>
-                    <p>erty</p>
-                    <select id="primitiveSelector" onchange="changePrimitive()">
+
+                    <select id="primitiveASelector" onchange="changePrimitiveA()">
                         <option value="cube">Cube</option>
                         <option value="sphere">Sphere</option>
                     </select>
                 </div>
                 <div class="column">
                     <td><div id="1" class="viewer"></div><code>b</code></td>
+
+                    <select id="primitiveBSelector" onchange="changePrimitiveB()">
+                        <option value="cube">Cube</option>
+                        <option value="sphere">Sphere</option>
+                    </select>
                 </div>
             </div>
             <div class="column">
@@ -60,10 +65,10 @@
             b.setColor(0,1,0);
             var c = a.intersect(b);
 
-            function changePrimitive() {
-                console.log("change primitive");
+            function changePrimitiveA() {
+                console.log("change primitive A");
 
-                var select = document.getElementById("primitiveSelector");
+                var select = document.getElementById("primitiveASelector");
                 var selectedValue = select.options[select.selectedIndex].value;
                 
                 // Modify var a based on selected primitive
@@ -71,6 +76,23 @@
                     a = CSGBuilder.cube();
                 } else if (selectedValue === "sphere") {
                     a = CSGBuilder.sphere({ radius: 1.35 });
+                }
+                
+                // Update viewer
+                updateViewers();
+            }
+
+            function changePrimitiveB() {
+                console.log("change primitive B");
+
+                var select = document.getElementById("primitiveBSelector");
+                var selectedValue = select.options[select.selectedIndex].value;
+                
+                // Modify var a based on selected primitive
+                if (selectedValue === "cube") {
+                    b = CSGBuilder.cube();
+                } else if (selectedValue === "sphere") {
+                    b = CSGBuilder.sphere({ radius: 1.35 });
                 }
                 
                 // Update viewer
