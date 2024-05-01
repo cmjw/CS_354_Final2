@@ -3,7 +3,7 @@
 <html>
     <body>
         <script src="./lib/lightgl/lightgl.js"></script>
-        <script src="./CSGBuilder.js"></script>
+        <script src="./CSGBuilder_O.js"></script>
         <script src="./CSGViewer.js"></script>
         
 
@@ -24,10 +24,10 @@
             a.setColor(0,0,1);
             b.setColor(0,1,0);
 
-            addViewer(new Viewer(a, 400, 400, 6));
-            addViewer(new Viewer(b, 400, 400, 6));
-            addViewer(new Viewer(a.intersect(b), 400, 400, 6));
-            addViewer(new Viewer(b.subtract(a), 400, 400, 6));
+            addViewer(new CSGViewer(a, 400, 400, 6));
+            addViewer(new CSGViewer(b, 400, 400, 6));
+            addViewer(new CSGViewer(a.intersect(b), 400, 400, 6));
+            addViewer(new CSGViewer(b.subtract(a), 400, 400, 6));
         </script>
     </body>
 </html>
