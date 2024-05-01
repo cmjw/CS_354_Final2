@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+    <body>
+        <script src="./lib/lightgl/lightgl.js"></script>
+        <script src="./CSGBuilder.js"></script>
+        <script src="./CSGViewer.js"></script>
+        
+
+        <table>
+            <tr>
+              <td><div id="0" class="viewer" style="background-position:-1px -1px;"></div><code>a</code></td>
+              <td><div id="1" class="viewer" style="background-position:-202px -1px;"></div><code>b</code></td>
+              <td><div id="2" class="viewer" style="background-position:-804px -1px;"></div><code>a.intersect(b)</code></td>
+              <td><div id="3" class="viewer" style="background-position:-202px -202px;"></div><code>b.subtract(a)</code></td>
+            </tr>
+        </table>
+
+        <script>
+            // Example test
+
+            var a = CSGBuilder.cube();
+            var b = CSGBuilder.sphere({ radius: 1.35 });
+            a.setColor(0,0,1);
+            b.setColor(0,1,0);
+
+            addViewer(new Viewer(a, 400, 400, 6));
+            addViewer(new Viewer(b, 400, 400, 6));
+            addViewer(new Viewer(a.intersect(b), 400, 400, 6));
+            addViewer(new Viewer(b.subtract(a), 400, 400, 6));
+        </script>
+    </body>
+</html>
