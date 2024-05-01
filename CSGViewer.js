@@ -93,6 +93,17 @@ function addViewer(viewer) {
 }
 
 /**
+ * Clear viewers
+ */
+function clearViewers() {
+  document.getElementById(0).innerHTML = "";
+  document.getElementById(1).innerHTML = "";
+  document.getElementById(2).innerHTML = "";
+  viewers = [];
+  nextID = 0;
+}
+
+/**
  * Convert a CSG object to a GL mesh
  */
 CSGBuilder.prototype.toMesh = function() {

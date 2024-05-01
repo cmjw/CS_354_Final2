@@ -62,7 +62,7 @@
 
             function changePrimitive() {
                 console.log("change primitive");
-                
+
                 var select = document.getElementById("primitiveSelector");
                 var selectedValue = select.options[select.selectedIndex].value;
                 
@@ -74,16 +74,18 @@
                 }
                 
                 // Update viewer
-                
+                updateViewers();
             }
 
 
             function updateViewers() {
                 // Clear existing viewers
+                clearViewers();
+                
 
                 addViewer(new CSGViewer(a, 400, 400, 6));
                 addViewer(new CSGViewer(b, 400, 400, 6));
-                addViewer(new CSGViewer(a.intersect(b), 800, 800, 6));
+                addViewer(new CSGViewer(c, 800, 800, 6));
             }
             
 
