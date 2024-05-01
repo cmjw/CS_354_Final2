@@ -34,7 +34,11 @@
                 
                 <div class="column">
                     <td><div id="0" class="viewer"></div><code>a</code></td>
-                    
+                    <p>erty</p>
+                    <select id="primitiveSelector" onchange="changePrimitive()">
+                        <option value="cube">Cube</option>
+                        <option value="sphere">Sphere</option>
+                    </select>
                 </div>
                 <div class="column">
                     <td><div id="1" class="viewer"></div><code>b</code></td>
@@ -49,17 +53,41 @@
 
 
         <script>
-            // Example test
 
             var a = CSGBuilder.cube();
             var b = CSGBuilder.sphere({ radius: 1.35 });
             a.setColor(0,0,1);
             b.setColor(0,1,0);
+            var c = a.intersect(b);
 
-            addViewer(new CSGViewer(a, 400, 400, 6));
-            addViewer(new CSGViewer(b, 400, 400, 6));
-            addViewer(new CSGViewer(a.intersect(b), 800, 800, 6));
-            //addViewer(new CSGViewer(b.subtract(a), 700, 400, 6));
+            function changePrimitive() {
+                console.log("change primitive");
+                
+                var select = document.getElementById("primitiveSelector");
+                var selectedValue = select.options[select.selectedIndex].value;
+                
+                // Modify var a based on selected primitive
+                if (selectedValue === "cube") {
+                    a = CSGBuilder.cube();
+                } else if (selectedValue === "sphere") {
+                    a = CSGBuilder.sphere({ radius: 1.35 });
+                }
+                
+                // Update viewer
+                
+            }
+
+
+            function updateViewers() {
+                // Clear existing viewers
+
+                addViewer(new CSGViewer(a, 400, 400, 6));
+                addViewer(new CSGViewer(b, 400, 400, 6));
+                addViewer(new CSGViewer(a.intersect(b), 800, 800, 6));
+            }
+            
+
+            updateViewers();
         </script>
     </body>
 </html>
