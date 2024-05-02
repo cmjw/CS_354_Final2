@@ -60,8 +60,9 @@ CSGBuilder.prototype = {
       b.invert();
       b.clipTo(a);
       b.invert();
-      a.build(b.allPolygons());
       
+      a.build(b.allPolygons());
+
       return CSGBuilder.fromPolygons(a.allPolygons());
     },
   

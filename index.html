@@ -122,7 +122,19 @@
                 var temp = a.clone();
                 var color = a.getColor();
 
-                a = new CSGBuilder.cube({ radius: parseFloat(sliderValue) });
+                var select = document.getElementById("primitiveASelector");
+                var selectedValue = select.options[select.selectedIndex].value;
+
+
+                
+                
+
+                if (selectedValue === "cube") {
+                    a = new CSGBuilder.cube({ radius: parseFloat(sliderValue) });
+                } else if (selectedValue === "sphere") {
+                    a = new CSGBuilder.sphere({ radius: parseFloat(sliderValue) });
+                }
+
                 a.setColor(a_r, a_g, a_b);
 
                 changeOperation();
@@ -160,10 +172,7 @@
                 }
 
                 if (selectedValue != "memory") {
-                    var r = Math.random()*2;
-                    var g = Math.random()*2;
-                    var bl = Math.random()*2;
-                    a.setColor(r,g,bl);
+                    setAColor();
                 }
 
                 changeOperation();
@@ -186,10 +195,7 @@
                 }
 
                 if (selectedValue != "memory") {
-                    var r = Math.random()*2;
-                    var g = Math.random()*2;
-                    var bl = Math.random()*2;
-                    b.setColor(r,g,bl);
+                    setBColor();
                 }
                 
                 changeOperation();

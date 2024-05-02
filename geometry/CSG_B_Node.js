@@ -92,8 +92,6 @@ CSGBuilder.Node.prototype = {
       }
     },
   
-    
-  
     // Build a BSP tree. Newest polygons are added to the bottom.
     // split across the given plane as described in the node class.
     build: function(polygons) {
