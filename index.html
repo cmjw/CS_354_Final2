@@ -18,7 +18,11 @@
         }
     </style>
 
-    <body>
+    <head>
+        <title>Constructive Solid Geometry by Charlotte White</title>
+    </head>
+
+    <body style="background-color: rgba(192, 192, 220, 0.753);">
         <script src="./lib/lightgl/lightgl.js"></script>
         <script src="./CSGBuilder.js"></script>
         <script src="./CSGViewer.js"></script>
@@ -30,42 +34,73 @@
 
         <script src="./primitives/sphere.js"></script>
         <script src="./primitives/cube.js"></script>
+        <script src="./primitives/hexasphere.js"></script>
         <script src="./primitives/cylinder.js"></script>
+
+        <h1>Interactive Constructive Solid Geometry</h1>
         
         <div class="row">
             <div class="column">
                 <div class="row">
                     <div class="column">
-                        <h1>Primitive A</h1>
+                        <h2>Primitive A</h2>
                         <td><div id="0" class="viewer"></div><code></code></td>
     
-                        <select id="primitiveASelector" onchange="changePrimitiveA()">
-                            <option value="cube">Cube</option>
-                            <option value="sphere">Sphere</option>
-                            <option value="cylinder">Cylinder</option>
-                            <option value="memory">Memory</option>
-                        </select>
+                        <div class="row">
+                            <select id="primitiveASelector" onchange="changePrimitiveA()">
+                                <option value="sphere">Sphere</option>
+                                <option value="cube">Cube</option>
+                                <option value="cylinder">Cylinder</option>
+                                <option value="hexasphere">Hexasphere</option>
+                                <option value="memory">Memory</option>
+                            </select>
+                        </div>
 
-                        <h1>Adjust Radius</h1>
-                        <input type="range" min="0" max="2" step="0.01" value="1" id="adjustRadiusA" onchange="adjustRadiusA()">
-                        <p>Radius: <span id="radiusA">1</span></p>
+                        <div class="row">
+                            <div class="column">
+                                <h2>Radius</h2>
+                                <input type="range" min="0" max="2" step="0.01" value="1" id="adjustRadiusA" onchange="adjustRadiusA()">
+                                <p>Radius: <span id="radiusA">1</span></p>
+                            </div>
+                            
+                            <div class="column">
+                                <h2>Height</h2>
+                                
+                                <input type="range" min="0" max="2" step="0.01" value="1" id="adjustHeightA" onchange="adjustHeightA()">
+                                <p>(some primitives only)</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="column">
-                        <h1>Primitive B</h1>
+                        <h2>Primitive B</h2>
                         <td><div id="1" class="viewer"></div><code></code></td>
-    
-                        <select id="primitiveBSelector" onchange="changePrimitiveB()">
-                            <option value="cube">Cube</option>
-                            <option value="sphere">Sphere</option>
-                            <option value="cylinder">Cylinder</option>
-                            <option value="memory">Memory</option>
-                        </select>
 
-                        <h1>Adjust Radius</h1>
-                        <input type="range" min="0" max="2" step="0.01" value="1" id="adjustRadiusB" onchange="adjustRadiusB()">
-                        <p>Radius: <span id="radiusB">1</span></p>
+                        <div class="row">
+                            <select id="primitiveBSelector" onchange="changePrimitiveB()">
+                                <option value="sphere">Sphere</option>
+                                <option value="cube">Cube</option>
+                                <option value="cylinder">Cylinder</option>
+                                <option value="hexasphere">Hexasphere</option>
+                                <option value="memory">Memory</option>
+                            </select>
+                        </div>
+
+                        <div class="row">
+                            <div class="column">
+                                <h2>Radius</h2>
+                                <input type="range" min="0" max="2" step="0.01" value="1" id="adjustRadiusB" onchange="adjustRadiusB()">
+                                <p>Radius: <span id="radiusB">1</span></p>
+                            </div>
+                            
+                            <div class="column">
+                                <h2>Height</h2>
+                                
+                                <input type="range" min="0" max="2" step="0.01" value="1" id="adjustHeightB" onchange="adjustHeightB()">
+                                <p>(some primitives only)</p>
+                            </div>
+                        </div>
+                        
                     </div>
-
                     
                 </div>
                 <div class="row">
@@ -95,25 +130,38 @@
 
 
         <script>
+            // starting point
 
-            var a = CSGBuilder.cube();
-            var b = CSGBuilder.sphere({ radius: 1.35 });
-
+            // save primitives
+            var a, b, c;
+            var memory;
+            // save color
             var a_r, a_g, a_b;
             var b_r, b_g, b_b;
+            // save height and radius
 
-            setAColor();
+            initSim();
+            updateViewers();
+            
+            /* Initialize the sim */
+            function initSim() {
+                a = CSGBuilder.cube();
+                b = CSGBuilder.sphere({ radius: 1.35 });
 
-            setBColor();
+                setAColor();
+                setBColor();
 
-            var c = a.union(b);
-            var memory = c;
+                c = a.union(b);
+                memory = c;
+            }
 
+            /* Save current geometry to memory */
             function saveToMemory() {
                 memory = c.clone();
                 updateViewers();
             }
 
+            /* Randomly set A color */
             function setAColor() {
                 a_r = Math.random()*2;
                 a_g = Math.random()*2;
@@ -121,13 +169,15 @@
                 a.setColor(a_r, a_g, a_b);
             }
 
+            /* Randomly set B color */
             function setBColor() {
                 b_r = Math.random()*2;
                 b_g = Math.random()*2;
                 b_b = Math.random()*2;
                 b.setColor(b_r, b_g, b_b);
             }
-
+ 
+            /* Adjust A radius on slider change */
             function adjustRadiusA() {
                 var sliderValue = document.getElementById("adjustRadiusA").value;
                 document.getElementById("radiusA").textContent = sliderValue;
@@ -142,6 +192,8 @@
                     a = new CSGBuilder.cube({ radius: parseFloat(sliderValue) });
                 } else if (selectedValue === "sphere") {
                     a = new CSGBuilder.sphere({ radius: parseFloat(sliderValue) });
+                } else if (selectedValue === "cylinder") {
+                    a = new CSGBuilder.cylinder({ radius: parseFloat(sliderValue), height: 2, slices: 32 });
                 }
 
                 a.setColor(a_r, a_g, a_b);
@@ -151,6 +203,30 @@
                 updateViewers();
             }
 
+            /* Adjust A height */
+            function adjustHeightA() {
+                var sliderValue = document.getElementById("adjustHeightA").value;
+        
+                var radiusVal = document.getElementById("adjustRadiusA").value;
+
+                var temp = a.clone();
+                var color = a.getColor();
+
+                var select = document.getElementById("primitiveASelector");
+                var selectedValue = select.options[select.selectedIndex].value;
+
+                if (selectedValue === "cylinder") {
+                    a = new CSGBuilder.cylinder({ radius: parseFloat(radiusVal), height: parseFloat(sliderValue), slices: 32 });
+                }
+
+                a.setColor(a_r, a_g, a_b);
+
+                changeOperation();
+
+                updateViewers();
+            }
+
+            /* Adjust B radius on slider change */
             function adjustRadiusB() {
                 var sliderValue = document.getElementById("adjustRadiusB").value;
                 document.getElementById("radiusB").textContent = sliderValue;
@@ -165,6 +241,8 @@
                     b = new CSGBuilder.cube({ radius: parseFloat(sliderValue) });
                 } else if (selectedValue === "sphere") {
                     b = new CSGBuilder.sphere({ radius: parseFloat(sliderValue) });
+                } else if (selectedValue === "cylinder") {
+                    b = new CSGBuilder.cylinder({ radius: parseFloat(sliderValue), height: 2, slices: 32 });
                 }
 
                 b.setColor(b_r, b_g, b_b);
@@ -174,6 +252,7 @@
                 updateViewers();
             }
 
+            /* Change the operation */
             function changeOperation() {
                 var select = document.getElementById("operationSelector");
                 var selectedValue = select.options[select.selectedIndex].value;
@@ -192,6 +271,7 @@
                 updateViewers();
             }
 
+            /* Change A primitive */
             function changePrimitiveA() {
                 console.log("change primitive A");
 
@@ -205,13 +285,15 @@
                     a = CSGBuilder.sphere({ radius: 1.35 });
                 } else if (selectedValue == "memory") {
                     a = memory.clone();
-                } else if (selectedValue === "cylinder") {
-                    a = CSGBuilder.cylinder({
+                } else if (selectedValue === "hexasphere") {
+                    a = CSGBuilder.hexasphere({
                         start: [0, -1, 0],
                         end: [0, 1, 0],
                         radius: 1,
                         slices: 16
                     });
+                } else if (selectedValue === "cylinder" ) {
+                    a = new CSGBuilder.cylinder({ radius: 1, height: 2, slices: 32 });
                 }
 
                 if (selectedValue != "memory") {
@@ -224,6 +306,7 @@
                 updateViewers();
             }
 
+            /* Change B primitive */
             function changePrimitiveB() {
                 console.log("change primitive B");
 
@@ -235,14 +318,19 @@
                     b = CSGBuilder.cube();
                 } else if (selectedValue === "sphere") {
                     b = CSGBuilder.sphere({ radius: 1.35 });
-                } else if (selectedValue === "cylinder") {
-                    b = CSGBuilder.cylinder({
+                } else if (selectedValue === "hexasphere") {
+                    b = CSGBuilder.hexasphere({
                         start: [0, -1, 0],
                         end: [0, 1, 0],
                         radius: 1,
                         slices: 16
                     });
+                } else if (selectedValue == "memory") {
+                    b = memory.clone();
+                } else if (selectedValue === "cylinder" ) {
+                    b = new CSGBuilder.cylinder({ radius: 1, height: 2, slices: 32 });
                 }
+
 
                 if (selectedValue != "memory") {
                     setBColor();
@@ -250,23 +338,20 @@
                 
                 changeOperation();
                 
-                // Update viewer
                 updateViewers();
             }
 
-
+            /* Update viewers */
             function updateViewers() {
                 // Clear existing viewers
                 clearViewers();
-                
 
                 addViewer(new CSGViewer(a, 400, 400, 6));
                 addViewer(new CSGViewer(b, 400, 400, 6));
                 addViewer(new CSGViewer(c, 800, 800, 6));
             }
             
-
-            updateViewers();
+            
         </script>
     </body>
 </html>

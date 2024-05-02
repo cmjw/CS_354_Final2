@@ -25,7 +25,7 @@ function CSGViewer(csgObject, width, height, depth) {
   
     // Set up WebGL state
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    gl.clearColor(0.93, 0.93, 0.93, 1);
+    gl.clearColor(0.01, 0.01, 0.01, 1);
     gl.enable(gl.DEPTH_TEST);
     gl.enable(gl.CULL_FACE);
     gl.polygonOffset(1, 1);
