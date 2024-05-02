@@ -39,6 +39,7 @@
                         <select id="primitiveASelector" onchange="changePrimitiveA()">
                             <option value="cube">Cube</option>
                             <option value="sphere">Sphere</option>
+                            <option value="memory">Memory</option>
                         </select>
                     </div>
                     <div class="column">
@@ -48,13 +49,11 @@
                         <select id="primitiveBSelector" onchange="changePrimitiveB()">
                             <option value="cube">Cube</option>
                             <option value="sphere">Sphere</option>
+                            <option value="memory">Memory</option>
                         </select>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="column">
-
-                    </div>
                     <div class="column">
                         <h1>Operation</h1>
                         <select id="operationSelector" onchange="changeOperation()">
@@ -62,12 +61,17 @@
                             <option value="intersection">Intersection</option>
                             <option value="subtract">Subtract</option>
                         </select>
+                        
+                    </div>
+                    <div class="column">
+                        <h1>Save Result</h1>
+                        <button onclick="saveToMemory()">Save to Memory</button>
                     </div>
                 </div>
             </div>
             <div class="column">
                 
-                <td><div id="2" class="viewer"></div><code>a.intersect(b)</code></td>
+                <td><div id="2" class="viewer"></div><code></code></td>
             </div>
             
           </div> 
@@ -77,9 +81,24 @@
 
             var a = CSGBuilder.cube();
             var b = CSGBuilder.sphere({ radius: 1.35 });
-            a.setColor(0,0,1);
-            b.setColor(0,1,0);
+
+            var r = Math.random()*2;
+            var g = Math.random()*2;
+            var bl = Math.random()*2;
+            a.setColor(r,g,bl);
+
+            r = Math.random()*2;
+            g = Math.random()*2;
+            bl = Math.random()*2;
+            b.setColor(r,g,bl);
+
             var c = a.union(b);
+            var memory = c;
+
+            function saveToMemory() {
+                memory = c.clone();
+                updateViewers();
+            }
 
             function changeOperation() {
                 var select = document.getElementById("operationSelector");
@@ -106,7 +125,15 @@
                     a = CSGBuilder.cube();
                 } else if (selectedValue === "sphere") {
                     a = CSGBuilder.sphere({ radius: 1.35 });
+                } else if (selectedValue == "memory") {
+                    a = memory.clone();
                 }
+
+                var r = Math.random()*2;
+                var g = Math.random()*2;
+                var b = Math.random()*2;
+                a.setColor(r,g,b);
+
                 changeOperation();
                 
                 // Update viewer
@@ -125,6 +152,11 @@
                 } else if (selectedValue === "sphere") {
                     b = CSGBuilder.sphere({ radius: 1.35 });
                 }
+
+                var r = Math.random()*2;
+                var g = Math.random()*2;
+                var b = Math.random()*2;
+                b.setColor(r,g,b);
 
                 changeOperation();
                 
