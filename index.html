@@ -30,7 +30,7 @@
 
         <script src="./primitives/sphere.js"></script>
         <script src="./primitives/cube.js"></script>
-
+        <script src="./primitives/cylinder.js"></script>
         
         <div class="row">
             <div class="column">
@@ -42,6 +42,7 @@
                         <select id="primitiveASelector" onchange="changePrimitiveA()">
                             <option value="cube">Cube</option>
                             <option value="sphere">Sphere</option>
+                            <option value="cylinder">Cylinder</option>
                             <option value="memory">Memory</option>
                         </select>
 
@@ -56,6 +57,7 @@
                         <select id="primitiveBSelector" onchange="changePrimitiveB()">
                             <option value="cube">Cube</option>
                             <option value="sphere">Sphere</option>
+                            <option value="cylinder">Cylinder</option>
                             <option value="memory">Memory</option>
                         </select>
 
@@ -176,7 +178,7 @@
 
                 if (selectedValue === "union") {
                     c = a.union(b);
-                } else if (selectedValue === "intersect") {
+                } else if (selectedValue === "intersection") {
                     c = a.intersect(b);
                 } else {
                     c = a.subtract(b);
@@ -197,6 +199,8 @@
                     a = CSGBuilder.sphere({ radius: 1.35 });
                 } else if (selectedValue == "memory") {
                     a = memory.clone();
+                } else if (selectedValue === "cylinder") {
+                    a = CSGBuilder.cylinder({radius: 1.35});
                 }
 
                 if (selectedValue != "memory") {
