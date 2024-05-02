@@ -5,8 +5,21 @@ CSGBuilder.cylinder = function(options) {
   options = options || {};
   
   var height = options.height || 2;
-  var s = new CSGBuilder.Vector(options.start || [0, -height/2, 0]);
-  var e = new CSGBuilder.Vector(options.end || [0, height/2, 0]); // Adjust end point based on height
+  var axis = options.axis || 0;
+
+  if (axis == 0) {
+    var s = new CSGBuilder.Vector(options.start || [-height/2,0, 0]);
+    var e = new CSGBuilder.Vector(options.end || [height/2,0, 0]);
+  } else if (axis == 1) {
+    var s = new CSGBuilder.Vector(options.start || [0, -height/2, 0]);
+    var e = new CSGBuilder.Vector(options.end || [0, height/2, 0]);
+  } else {
+    var s = new CSGBuilder.Vector(options.start || [0,0, -height/2]);
+    var e = new CSGBuilder.Vector(options.end || [0,0, height/2]);
+  }
+
+  
+  
   var ray = e.minus(s);
   var r = options.radius || 1;
   var slices = options.slices || 16;
