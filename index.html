@@ -75,6 +75,8 @@
                             <option value="union">Union</option>
                             <option value="intersection">Intersection</option>
                             <option value="subtract">Subtract</option>
+                            <option value="inverseA">Invert A</option>
+                            <option value="inverseB">Invert B</option>
                         </select>
                         
                     </div>
@@ -180,8 +182,12 @@
                     c = a.union(b);
                 } else if (selectedValue === "intersection") {
                     c = a.intersect(b);
-                } else {
+                } else if (selectedValue === "subtract") {
                     c = a.subtract(b);
+                } else if (selectedValue === "inverseA") {
+                    c = a.inverse();
+                } else if (selectedValue === "inverseB") {
+                    c = b.inverse();
                 }
                 updateViewers();
             }
