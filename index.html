@@ -17,7 +17,7 @@
 
     <body>
         <script src="./lib/lightgl/lightgl.js"></script>
-        <script src="./CSGBuilder_O.js"></script>
+        <script src="./CSGBuilder.js"></script>
         <script src="./CSGViewer.js"></script>
         <script src="./geometry/CSG_B_Vector.js"></script>
         <script src="./geometry/CSG_B_Plane.js"></script>
@@ -31,22 +31,38 @@
         
         <div class="row">
             <div class="column">
-                
-                <div class="column">
-                    <td><div id="0" class="viewer"></div><code>a</code></td>
-
-                    <select id="primitiveASelector" onchange="changePrimitiveA()">
-                        <option value="cube">Cube</option>
-                        <option value="sphere">Sphere</option>
-                    </select>
+                <div class="row">
+                    <div class="column">
+                        <h1>Primitive A</h1>
+                        <td><div id="0" class="viewer"></div><code></code></td>
+    
+                        <select id="primitiveASelector" onchange="changePrimitiveA()">
+                            <option value="cube">Cube</option>
+                            <option value="sphere">Sphere</option>
+                        </select>
+                    </div>
+                    <div class="column">
+                        <h1>Primitive B</h1>
+                        <td><div id="1" class="viewer"></div><code></code></td>
+    
+                        <select id="primitiveBSelector" onchange="changePrimitiveB()">
+                            <option value="cube">Cube</option>
+                            <option value="sphere">Sphere</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="column">
-                    <td><div id="1" class="viewer"></div><code>b</code></td>
+                <div class="row">
+                    <div class="column">
 
-                    <select id="primitiveBSelector" onchange="changePrimitiveB()">
-                        <option value="cube">Cube</option>
-                        <option value="sphere">Sphere</option>
-                    </select>
+                    </div>
+                    <div class="column">
+                        <h1>Operation</h1>
+                        <select id="operationSelector" onchange="changeOperation()">
+                            <option value="union">Union</option>
+                            <option value="intersection">Intersection</option>
+                            <option value="subtract">Subtract</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="column">
@@ -63,7 +79,21 @@
             var b = CSGBuilder.sphere({ radius: 1.35 });
             a.setColor(0,0,1);
             b.setColor(0,1,0);
-            var c = a.intersect(b);
+            var c = a.union(b);
+
+            function changeOperation() {
+                var select = document.getElementById("operationSelector");
+                var selectedValue = select.options[select.selectedIndex].value;
+
+                if (selectedValue === "union") {
+                    c = a.union(b);
+                } else if (selectedValue === "intersect") {
+                    c = a.intersect(b);
+                } else {
+                    c = a.subtract(b);
+                }
+                updateViewers();
+            }
 
             function changePrimitiveA() {
                 console.log("change primitive A");
@@ -77,6 +107,7 @@
                 } else if (selectedValue === "sphere") {
                     a = CSGBuilder.sphere({ radius: 1.35 });
                 }
+                changeOperation();
                 
                 // Update viewer
                 updateViewers();
@@ -94,6 +125,8 @@
                 } else if (selectedValue === "sphere") {
                     b = CSGBuilder.sphere({ radius: 1.35 });
                 }
+
+                changeOperation();
                 
                 // Update viewer
                 updateViewers();
