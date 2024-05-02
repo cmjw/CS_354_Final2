@@ -68,6 +68,7 @@
                                 
                                 <input type="range" min="0" max="2" step="0.01" value="1" id="adjustHeightA" onchange="adjustHeightA()">
                                 <p>(some primitives only)</p>
+                                <p>Height: <span id="heightA">1</span></p>
                             </div>
                         </div>
                     </div>
@@ -205,8 +206,8 @@
 
             /* Adjust A height */
             function adjustHeightA() {
-                var sliderValue = document.getElementById("adjustHeightA").value;
-        
+                var heightVal = document.getElementById("adjustHeightA").value;
+                document.getElementById("heightA").textContent = heightVal;
                 var radiusVal = document.getElementById("adjustRadiusA").value;
 
                 var temp = a.clone();
@@ -216,7 +217,8 @@
                 var selectedValue = select.options[select.selectedIndex].value;
 
                 if (selectedValue === "cylinder") {
-                    a = new CSGBuilder.cylinder({ radius: parseFloat(radiusVal), height: parseFloat(sliderValue), slices: 32 });
+                    console.log(parseFloat(heightVal));
+                    a = new CSGBuilder.cylinder({ radius:parseFloat(radiusVal), height:parseFloat(heightVal), slices: 32 });
                 }
 
                 a.setColor(a_r, a_g, a_b);
