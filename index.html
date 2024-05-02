@@ -200,7 +200,12 @@
                 } else if (selectedValue == "memory") {
                     a = memory.clone();
                 } else if (selectedValue === "cylinder") {
-                    a = CSGBuilder.cylinder({radius: 1.35});
+                    a = CSGBuilder.cylinder({
+                        start: [0, -1, 0],
+                        end: [0, 1, 0],
+                        radius: 1,
+                        slices: 16
+                    });
                 }
 
                 if (selectedValue != "memory") {
@@ -224,6 +229,13 @@
                     b = CSGBuilder.cube();
                 } else if (selectedValue === "sphere") {
                     b = CSGBuilder.sphere({ radius: 1.35 });
+                } else if (selectedValue === "cylinder") {
+                    b = CSGBuilder.cylinder({
+                        start: [0, -1, 0],
+                        end: [0, 1, 0],
+                        radius: 1,
+                        slices: 16
+                    });
                 }
 
                 if (selectedValue != "memory") {
