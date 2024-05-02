@@ -129,10 +129,12 @@
                     a = memory.clone();
                 }
 
-                var r = Math.random()*2;
-                var g = Math.random()*2;
-                var b = Math.random()*2;
-                a.setColor(r,g,b);
+                if (selectedValue != "memory") {
+                    var r = Math.random()*2;
+                    var g = Math.random()*2;
+                    var bl = Math.random()*2;
+                    a.setColor(r,g,bl);
+                }
 
                 changeOperation();
                 
@@ -153,11 +155,13 @@
                     b = CSGBuilder.sphere({ radius: 1.35 });
                 }
 
-                var r = Math.random()*2;
-                var g = Math.random()*2;
-                var b = Math.random()*2;
-                b.setColor(r,g,b);
-
+                if (selectedValue != "memory") {
+                    var r = Math.random()*2;
+                    var g = Math.random()*2;
+                    var bl = Math.random()*2;
+                    b.setColor(r,g,bl);
+                }
+                
                 changeOperation();
                 
                 // Update viewer
