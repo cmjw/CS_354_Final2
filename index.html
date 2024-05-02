@@ -41,6 +41,10 @@
                             <option value="sphere">Sphere</option>
                             <option value="memory">Memory</option>
                         </select>
+
+                        <h1>Adjust Variable</h1>
+                        <input type="range" min="0" max="2" step="0.01" value="1" id="adjustRadiusA" onchange="adjustRadiusA()">
+                        <p>Variable Value: <span id="radiusA">1</span></p>
                     </div>
                     <div class="column">
                         <h1>Primitive B</h1>
@@ -82,21 +86,47 @@
             var a = CSGBuilder.cube();
             var b = CSGBuilder.sphere({ radius: 1.35 });
 
-            var r = Math.random()*2;
-            var g = Math.random()*2;
-            var bl = Math.random()*2;
-            a.setColor(r,g,bl);
+            var a_r, a_g, a_b;
+            var b_r, b_g, b_b;
 
-            r = Math.random()*2;
-            g = Math.random()*2;
-            bl = Math.random()*2;
-            b.setColor(r,g,bl);
+            setAColor();
+
+            setBColor();
 
             var c = a.union(b);
             var memory = c;
 
             function saveToMemory() {
                 memory = c.clone();
+                updateViewers();
+            }
+
+            function setAColor() {
+                a_r = Math.random()*2;
+                a_g = Math.random()*2;
+                a_b = Math.random()*2;
+                a.setColor(a_r, a_g, a_b);
+            }
+
+            function setBColor() {
+                b_r = Math.random()*2;
+                b_g = Math.random()*2;
+                b_b = Math.random()*2;
+                b.setColor(b_r, b_g, b_b);
+            }
+
+            function adjustRadiusA() {
+                var sliderValue = document.getElementById("adjustRadiusA").value;
+                document.getElementById("radiusA").textContent = sliderValue;
+
+                var temp = a.clone();
+                var color = a.getColor();
+
+                a = new CSGBuilder.cube({ radius: parseFloat(sliderValue) });
+                a.setColor(a_r, a_g, a_b);
+
+                changeOperation();
+
                 updateViewers();
             }
 

@@ -142,3 +142,7 @@ CSGBuilder.prototype.setColor = function(r,g,b) {
         polygon.shared = [r,g,b];
     });
 };
+
+CSGBuilder.prototype.getColor = function() {
+  return this.shared;
+};
