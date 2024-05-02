@@ -66,7 +66,7 @@
                             <div class="column">
                                 <h2>Height</h2>
                                 
-                                <input type="range" min="0" max="2" step="0.01" value="1" id="adjustHeightA" onchange="adjustHeightA()">
+                                <input type="range" min="0" max="8" step="0.01" value="1" id="adjustHeightA" onchange="adjustHeightA()">
                                 <p>(some primitives only)</p>
                                 <p>Height: <span id="heightA">1</span></p>
                             </div>
@@ -96,8 +96,9 @@
                             <div class="column">
                                 <h2>Height</h2>
                                 
-                                <input type="range" min="0" max="2" step="0.01" value="1" id="adjustHeightB" onchange="adjustHeightB()">
+                                <input type="range" min="0" max="8" step="0.01" value="1" id="adjustHeightB" onchange="adjustHeightB()">
                                 <p>(some primitives only)</p>
+                                <p>Height: <span id="heightB">1</span></p>
                             </div>
                         </div>
                         
@@ -222,6 +223,30 @@
                 }
 
                 a.setColor(a_r, a_g, a_b);
+
+                changeOperation();
+
+                updateViewers();
+            }
+
+            /* Adjust B height */
+            function adjustHeightB() {
+                var heightVal = document.getElementById("adjustHeightB").value;
+                document.getElementById("heightB").textContent = heightVal;
+                var radiusVal = document.getElementById("adjustRadiusB").value;
+
+                var temp = b.clone();
+                var color = b.getColor();
+
+                var select = document.getElementById("primitiveASelector");
+                var selectedValue = select.options[select.selectedIndex].value;
+
+                if (selectedValue === "cylinder") {
+                    console.log(parseFloat(heightVal));
+                    b = new CSGBuilder.cylinder({ radius:parseFloat(radiusVal), height:parseFloat(heightVal), slices: 32 });
+                }
+
+                b.setColor(b_r, b_g, b_b);
 
                 changeOperation();
 

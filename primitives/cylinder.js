@@ -3,9 +3,10 @@
  */
 CSGBuilder.cylinder = function(options) {
   options = options || {};
-  var s = new CSGBuilder.Vector(options.start || [0, -1, 0]);
+  
   var height = options.height || 2;
-  var e = new CSGBuilder.Vector(options.end || [0, height - 1, 0]); // Adjust end point based on height
+  var s = new CSGBuilder.Vector(options.start || [0, -height/2, 0]);
+  var e = new CSGBuilder.Vector(options.end || [0, height/2, 0]); // Adjust end point based on height
   var ray = e.minus(s);
   var r = options.radius || 1;
   var slices = options.slices || 16;
