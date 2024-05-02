@@ -310,6 +310,10 @@
                     b = new CSGBuilder.cylinder({ radius:parseFloat(sliderValue), height:parseFloat(heightVal), slices: 32, axis: 1 });
                 } else if (selectedValue === "cylinderz") {
                     b = new CSGBuilder.cylinder({ radius:parseFloat(sliderValue), height:parseFloat(heightVal), slices: 32, axis: 2 });
+                } else if (selectedValue === "cube") {
+                    b = new CSGBuilder.cube({ radius: parseFloat(sliderValue) });
+                } else if (selectedValue === "sphere") {
+                    b = new CSGBuilder.sphere({ radius: parseFloat(sliderValue) });
                 }
 
                 b.setColor(b_r, b_g, b_b);
