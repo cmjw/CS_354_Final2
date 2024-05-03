@@ -26,6 +26,7 @@ CSGBuilder.Node.prototype = {
       node.front = this.front && this.front.clone();
       node.back = this.back && this.back.clone();
       node.polygons = this.polygons.map(function(p) { return p.clone(); });
+      
       return node;
     },
 
@@ -50,6 +51,7 @@ CSGBuilder.Node.prototype = {
       if (this.back) {
         this.back.invert();
       }
+
       // swap
       var temp = this.front;
       this.front = this.back;

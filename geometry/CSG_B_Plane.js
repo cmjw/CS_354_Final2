@@ -29,7 +29,7 @@ CSGBuilder.Plane.fromThreePoints = function(a, b, c) {
 */
 
 // split tolerance
-CSGBuilder.Plane.EPSILON = 1e-10;
+CSGBuilder.Plane.EPSILON = 1e-4;
 
 
 /**

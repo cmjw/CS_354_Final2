@@ -22,8 +22,8 @@ CSGBuilder.sphere = function(options) {
       vertices.push(new CSGBuilder.Vertex(c.plus(dir.times(r)), dir));
     }
 
-    var slices = 32;
-    var stacks = 32;
+    var slices = 24;
+    var stacks = 24;
 
     for (var i = 0; i < slices; i++) {
       for (var j = 0; j < stacks; j++) {
