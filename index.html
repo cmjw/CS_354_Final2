@@ -107,6 +107,26 @@
             var c = a.union(b);
             var memory = c;
 
+<<<<<<< Updated upstream
+=======
+                // if (op == 0) {
+                //     c = a.union(b);
+                // } else if (op == 1) {
+                //     c = a.intersect(b);
+                // } else if (op == 2) {
+                //     c = a.subtract(b);
+                // } else if (op == 3) {
+                //     c = a.inverse();
+                // } else {
+                //     c = b.inverse();
+                // }
+
+                c = a.union(b);
+                memory = c;
+            }
+
+            /* Save current geometry to memory */
+>>>>>>> Stashed changes
             function saveToMemory() {
                 memory = c.clone();
                 updateViewers();
@@ -236,6 +256,17 @@
                         radius: 1,
                         slices: 16
                     });
+<<<<<<< Updated upstream
+=======
+                } else if (selectedValue == "memory") {
+                    b = memory.clone();
+                } else if (selectedValue === "cylinderx" ) {
+                    b = new CSGBuilder.cylinder({ radius: 1, height: 2, slices: 32, axis: 0  });
+                } else if (selectedValue === "cylindery" ) {
+                    b = new CSGBuilder.cylinder({ radius: 1, height: 2, slices: 32, axis: 1  });
+                } else if (selectedValue === "cylinderz" ) {
+                    b = new CSGBuilder.cylinder({ radius: 1, height: 2, slices: 32, axis: 2  });
+>>>>>>> Stashed changes
                 }
 
                 if (selectedValue != "memory") {
